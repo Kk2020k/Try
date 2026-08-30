@@ -28,12 +28,13 @@ class Var(object):
     
     else:
         ON_HEROKU = False
-    FQDN = str(getenv('FQDN', BIND_ADRESS)) if not ON_HEROKU or getenv('FQDN') else APP_NAME+'.herokuapp.com'
-    HAS_SSL=bool(getenv('HAS_SSL',False))
-    if HAS_SSL:
-        URL = "https://{}/".format(FQDN)
-    else:
-        URL = "http://{}/".format(FQDN)
-    DATABASE_URL = str(getenv('DATABASE_URL', 'mongodb+srv://Test:test@cluster0.l3ul5li.mongodb.net/?retryWrites=true&w=majority'))
+    FQDN = str(getenv("FQDN", "file2link-assrsma56.koyeb.app"))
+HAS_SSL = str(getenv("HAS_SSL", "True")).lower() == "true"
+
+if HAS_SSL:
+    URL = f"https://{FQDN}/"
+else:
+    URL = f"http://{FQDN}/"
+DATABASE_URL = str(getenv('DATABASE_URL', 'mongodb+srv://Test:test@cluster0.l3ul5li.mongodb.net/?retryWrites=true&w=majority'))
     UPDATES_CHANNEL = str(getenv('UPDATES_CHANNEL', 'Uptate2k'))
     BANNED_CHANNELS = list(set(int(x) for x in str(getenv("BANNED_CHANNELS", "")).split())) 
